@@ -1,41 +1,34 @@
-# import threading
-# import time
-# resoure = 0
-
-# count = 1000000
-
-# resoure_lock = threading.Lock()
-
-
-# def increment():
-#     global resoure
-#     for i in range(count):
-#         with resoure_lock:
-#                 resoure += 1
-
-
-# def decerment():
-#     global resoure
-#     for i in range(count):
-#         with resoure_lock:
-#                 resoure -= 1
-        
-
-
-# increment_thread = threading.Thread(target=increment)
-# decerment_thread = threading.Thread(target=decerment)
-
-# increment_thread.start()
-# decerment_thread.start()
-
-# increment_thread.join()
-# decerment_thread.join()
-
-# print(resoure)
-
 import threading
+import time
+resoure = 0
 
-    
-lock.acquire()
-dosomething(lock)
-lock.release()
+count = 1000000
+
+semaphore = threading.Semaphore(1)
+
+
+def increment():
+    global resoure
+    for i in range(count):
+        semaphore.acquire()
+        resoure += 1
+        semaphore.release()
+
+def decerment():
+    global resoure
+    for i in range(count):
+        semaphore.acquire()
+        resoure -= 1
+        semaphore.release()
+
+
+increment_thread = threading.Thread(target=increment)
+decerment_thread = threading.Thread(target=decerment)
+
+increment_thread.start()
+decerment_thread.start()
+
+increment_thread.join()
+decerment_thread.join()
+
+print(resoure)
