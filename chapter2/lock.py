@@ -35,11 +35,6 @@
 
 import threading
 
-lock = threading.Lock()
-def dosomething(lock):
-    lock.acquire()
-    # do something
-    lock.release()
     
 lock.acquire()
 dosomething(lock)
